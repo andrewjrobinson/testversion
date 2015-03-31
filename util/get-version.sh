@@ -20,13 +20,13 @@ if [ -e "${VERSION_HEADER_FILE}" ]; then
     MAJOR=$(grep "^#define ${VERSION_DEFINE_PREFIX}_VERSION_MAJOR" ${VERSION_HEADER_FILE} | sed 's/^#define '${VERSION_DEFINE_PREFIX}'_VERSION_MAJOR \([0-9]*\).*$/\1/g')
     MINOR=$(grep "^#define ${VERSION_DEFINE_PREFIX}_VERSION_MINOR" ${VERSION_HEADER_FILE} | sed 's/^#define '${VERSION_DEFINE_PREFIX}'_VERSION_MINOR \([0-9]*\).*$/\1/g')
     PATCH=$(grep "^#define ${VERSION_DEFINE_PREFIX}_VERSION_PATCH" ${VERSION_HEADER_FILE} | sed 's/^#define '${VERSION_DEFINE_PREFIX}'_VERSION_PATCH \([0-9]*\).*$/\1/g')
-    LABEL=$(grep "^#define ${VERSION_DEFINE_PREFIX}_VERSION_LABEL" ${VERSION_HEADER_FILE} | sed 's/^#define '${VERSION_DEFINE_PREFIX}'_VERSION_LABEL \([a-zA-Z0-9]*\).*$/\1/g')
+    LABEL=$(grep "^#define ${VERSION_DEFINE_PREFIX}_VERSION_LABEL" ${VERSION_HEADER_FILE} | sed 's/^#define '${VERSION_DEFINE_PREFIX}'_VERSION_LABEL "-\([a-zA-Z0-9]*\)".*$/\1/g')
     DATE=$(grep "^#define ${VERSION_DEFINE_PREFIX}_VERSION_DATE" ${VERSION_HEADER_FILE} | sed 's/^#define '${VERSION_DEFINE_PREFIX}'_VERSION_DATE "\([-0-9]*\)".*$/\1/g')
 elif [ -e "${VERSION_CMAKE_FILE}" ]; then
     MAJOR=$(grep "^set (${VERSION_DEFINE_PREFIX}_VERSION_MAJOR" ${VERSION_CMAKE_FILE} | sed 's/^set ('${VERSION_DEFINE_PREFIX}'_VERSION_MAJOR \([0-9]*\).*)$/\1/g')
     MINOR=$(grep "^set (${VERSION_DEFINE_PREFIX}_VERSION_MINOR" ${VERSION_CMAKE_FILE} | sed 's/^set ('${VERSION_DEFINE_PREFIX}'_VERSION_MINOR \([0-9]*\).*)$/\1/g')
     PATCH=$(grep "^set (${VERSION_DEFINE_PREFIX}_VERSION_PATCH" ${VERSION_CMAKE_FILE} | sed 's/^set ('${VERSION_DEFINE_PREFIX}'_VERSION_PATCH \([0-9]*\).*)$/\1/g')
-    LABEL=$(grep "^set (${VERSION_DEFINE_PREFIX}_VERSION_LABEL" ${VERSION_CMAKE_FILE} | sed 's/^set ('${VERSION_DEFINE_PREFIX}'_VERSION_LABEL \([a-zA-Z0-9]*\).*)$/\1/g')
+    LABEL=$(grep "^set (${VERSION_DEFINE_PREFIX}_VERSION_LABEL" ${VERSION_CMAKE_FILE} | sed 's/^set ('${VERSION_DEFINE_PREFIX}'_VERSION_LABEL "-\([a-zA-Z0-9]*\)".*)$/\1/g')
     DATE=$(grep "^set (${VERSION_DEFINE_PREFIX}_VERSION_DATE" ${VERSION_CMAKE_FILE} | sed 's/^set ('${VERSION_DEFINE_PREFIX}'_VERSION_DATE "\([-0-9]*\)".*)$/\1/g')
 else
 	echo "Error: Neither version.h OR a CMakeLists.txt file existed so no where to look for version information"

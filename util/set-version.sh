@@ -25,15 +25,15 @@ VERSION_CMAKE_FILE=$(readlink -m $UTILFULLPATH/../${VERSION_CMAKE_FILE})
 
 # check version number was found correctly (and extract parts)
 if [[ "$VERSION_NUMBER" =~ ^([0-9]+).([0-9]+).([0-9]+)-([a-zA-Z0-9]+)$ ]]; then
-    VERSION=(${BASH_REMATCH[1]} ${BASH_REMATCH[2]} ${BASH_REMATCH[3]} ${BASH_REMATCH[4]})
+    VERSION=(${BASH_REMATCH[1]} ${BASH_REMATCH[2]} ${BASH_REMATCH[3]} "-${BASH_REMATCH[4]}")
 elif [[ "$VERSION_NUMBER" =~ ^([0-9]+).([0-9]+).([0-9]+)$ ]]; then
     VERSION=(${BASH_REMATCH[1]} ${BASH_REMATCH[2]} ${BASH_REMATCH[3]} "")
 elif [[ "$VERSION_NUMBER" =~ ^([0-9]+).([0-9]+)-([a-zA-Z0-9]+)$ ]]; then
-    VERSION=(${BASH_REMATCH[1]} ${BASH_REMATCH[2]} "0" ${BASH_REMATCH[3]})
+    VERSION=(${BASH_REMATCH[1]} ${BASH_REMATCH[2]} "0" "-${BASH_REMATCH[3]}")
 elif [[ "$VERSION_NUMBER" =~ ^([0-9]+).([0-9]+)$ ]]; then
     VERSION=(${BASH_REMATCH[1]} ${BASH_REMATCH[2]} "0" "")
 elif [[ "$VERSION_NUMBER" =~ ^([0-9]+)-([a-zA-Z0-9]+)$ ]]; then
-    VERSION=(${BASH_REMATCH[1]} "0" "0" ${BASH_REMATCH[2]})
+    VERSION=(${BASH_REMATCH[1]} "0" "0" "-${BASH_REMATCH[2]}")
 elif [[ "$VERSION_NUMBER" =~ ^([0-9]+)$ ]]; then
     VERSION=(${BASH_REMATCH[1]} "0" "0" "")
 else
@@ -51,7 +51,7 @@ if [ -e "${VERSION_HEADER_FILE}" ]; then
     sed 's/^\(#define '${VERSION_DEFINE_PREFIX}'_VERSION_MAJOR\).*$/\1 '${VERSION[0]}'/g' --in-place=.bak ${VERSION_HEADER_FILE}
     sed 's/^\(#define '${VERSION_DEFINE_PREFIX}'_VERSION_MINOR\).*$/\1 '${VERSION[1]}'/g' --in-place ${VERSION_HEADER_FILE}
     sed 's/^\(#define '${VERSION_DEFINE_PREFIX}'_VERSION_PATCH\).*$/\1 '${VERSION[2]}'/g' --in-place ${VERSION_HEADER_FILE}
-    sed 's/^\(#define '${VERSION_DEFINE_PREFIX}'_VERSION_LABEL\).*$/\1 '${VERSION[3]}'/g' --in-place ${VERSION_HEADER_FILE}
+    sed 's/^\(#define '${VERSION_DEFINE_PREFIX}'_VERSION_LABEL\).*$/\1 "'${VERSION[3]}'"/g' --in-place ${VERSION_HEADER_FILE}
     sed 's/^\(#define '${VERSION_DEFINE_PREFIX}'_VERSION_DATE\).*$/\1 "'${DATE}'"/g' --in-place ${VERSION_HEADER_FILE}
     git add ${VERSION_HEADER_FILE}
     UPDATESDONE=1
@@ -62,7 +62,7 @@ if [ -e "${VERSION_CMAKE_FILE}" ]; then
     sed 's/^\(set ('${VERSION_DEFINE_PREFIX}'_VERSION_MAJOR\).*)$/\1 '${VERSION[0]}')/g' --in-place=.bak ${VERSION_CMAKE_FILE}
     sed 's/^\(set ('${VERSION_DEFINE_PREFIX}'_VERSION_MINOR\).*)$/\1 '${VERSION[1]}')/g' --in-place ${VERSION_CMAKE_FILE}
     sed 's/^\(set ('${VERSION_DEFINE_PREFIX}'_VERSION_PATCH\).*)$/\1 '${VERSION[2]}')/g' --in-place ${VERSION_CMAKE_FILE}
-    sed 's/^\(set ('${VERSION_DEFINE_PREFIX}'_VERSION_LABEL\).*)$/\1 '${VERSION[3]}')/g' --in-place ${VERSION_CMAKE_FILE}
+    sed 's/^\(set ('${VERSION_DEFINE_PREFIX}'_VERSION_LABEL\).*)$/\1 "'${VERSION[3]}'")/g' --in-place ${VERSION_CMAKE_FILE}
     sed 's/^\(set ('${VERSION_DEFINE_PREFIX}'_VERSION_DATE\).*)$/\1 "'${DATE}'")/g' --in-place ${VERSION_CMAKE_FILE}
     git add ${VERSION_CMAKE_FILE}
     UPDATESDONE=1
