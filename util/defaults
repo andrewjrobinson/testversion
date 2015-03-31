@@ -1,0 +1,45 @@
+# defaults
+# Created on: 10 Nov 2014
+#     Author: arobinson
+#
+# !!!!! DO NOT EDIT THESE SETTINGS !!!!!
+# Instead, copy settings.conf.example to settings.conf
+# and edit settings.conf
+#
+
+## find settings file
+FULLSCRIPTPATH=$(readlink -f $0)
+UTILFULLPATH=$(dirname ${FULLSCRIPTPATH})
+if [[ ! -e $UTILFULLPATH/settings.conf ]]; then
+	echo "Info: No settings file.  Creating new one from template."
+	cp settings.conf.example settings.conf || touch settings.conf
+fi
+
+## Set default values
+# make shared libraries (1 = on, other = off)
+SHARED=1
+
+# Number of CPU's for building
+CPUS=1
+
+# Debug build (i.e. gdb symbols) (1 = on, other = off)
+DEBUG=1
+
+# paths
+INSTALLDIR=`pwd`/deploy
+BUILDDIR=`pwd`/build
+
+# versions
+VERSION_DEFINE_PREFIX=MYAPP
+VERSION_HEADER_FILE=src/version.h
+VERSION_CMAKE_FILE=src/CMakeLists.txt
+
+# branches
+PROD_BRANCH="master"
+DEV_BRANCH="dev"
+RELEASE_PREFIX="release-"
+HOTFIX_PREFIX="hotfix-"
+
+## load user overrides
+source $UTILFULLPATH/settings.conf
+
