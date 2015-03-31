@@ -38,14 +38,16 @@ if [[ "$(git branch | grep $PROD_BRANCH)" == "" ]]; then
 fi
 if [[ ! "$CURRENT_BRANCH" =~ ^${RELEASE_PREFIX} ]]; then
     echo "------------"
-    echo "Warning: current branch ($CURRENT_BRANCH) does not appear to be a release branch."
+    echo "Error: current branch ($CURRENT_BRANCH) does not appear to be a release branch."
 	echo ""
-	read -p "Are you sure you want to proceed? [y/N] " -n 1 -r
-	echo ""
-	if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-		echo "User got scared and pulled out"
-		exit 1
-	fi
+	exit 1
+fi
+
+# find release version
+RELEASE_NUMBER=$(git branch | grep "^* " | sed 's/* '$RELEASE_PREFIX'//g')
+if [ "$RELEASE_NUMBER" == "" ]; then
+	echo "Error: unable to identify version number"
+	exit 10
 fi
 
 # check a version was found
