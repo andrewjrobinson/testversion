@@ -67,11 +67,19 @@ if [[ "$HIGHEST_VERSION" != "$RELEASE_NUMBER" ]]; then
 	exit 10
 fi
 
+# append -prerelease if needed
+RELEASE_LABEL=$(echo $RELEASE_NUMBER | sed 's/^[0-9.]*\(-[0-9a-zA-Z]*\)\?$/\1/g')
+if [ "$RELEASE_LABEL" == "" ]; then
+    RELEASE_LABEL="-prerelease"
+else
+    RELEASE_NUMBER=$(echo $RELEASE_NUMBER | sed 's/^\([0-9.]*\)\(-[0-9a-zA-Z]*\)\?$/\1/g')
+fi
+
 # check user is ok to proceed
 echo "I am about to run the following commands:"
 echo ""
 echo "  git checkout -b \"$RELEASE_BRANCH\" $DEV_BRANCH"
-echo "  ${UTILFULLPATH}/set-version.sh $RELEASE_NUMBER"
+echo "  ${UTILFULLPATH}/set-version.sh $RELEASE_NUMBER$RELEASE_LABEL"
 echo "  git commit -m \"Preparing for release v$RELEASE_NUMBER\""
 echo ""
 read -p "Are you happy to proceed? [y/N] " -n 1 -r
@@ -87,9 +95,9 @@ if [ "$?" != "0" ]; then
     echo "git checkout -b \"$RELEASE_BRANCH\" $DEV_BRANCH:  Failed (with code $?), exiting"
     exit 5
 fi
-${UTILFULLPATH}/set-version.sh $RELEASE_NUMBER
+${UTILFULLPATH}/set-version.sh $RELEASE_NUMBER$RELEASE_LABEL
 if [ "$?" != "0" ]; then
-    echo "${UTILFULLPATH}/set-version.sh $RELEASE_NUMBER:  Failed (with code $?), exiting"
+    echo "${UTILFULLPATH}/set-version.sh $RELEASE_NUMBER$RELEASE_LABEL:  Failed (with code $?), exiting"
     exit 5
 fi
 git commit -m "Preparing for release v$RELEASE_NUMBER"
