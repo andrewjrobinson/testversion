@@ -4,9 +4,9 @@
 
 # version (NOTE: these are auto-updated so DO NOT EDIT, not even spaces)
 set (MYAPP_VERSION_MAJOR 0)
-set (MYAPP_VERSION_MINOR 1)
+set (MYAPP_VERSION_MINOR 2)
 set (MYAPP_VERSION_PATCH 0)
-set (MYAPP_VERSION_LABEL "-beta5")
+set (MYAPP_VERSION_LABEL "-prerelease")
 set (MYAPP_VERSION_DATE "2015-03-31")
 # end autoupdates
 

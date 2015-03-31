@@ -37,9 +37,9 @@
 
 // --- the following defines are auto-updated by the set-version.sh so DO NOT EDIT THEM!! ---
 #define MYAPP_VERSION_MAJOR 0
-#define MYAPP_VERSION_MINOR 1
+#define MYAPP_VERSION_MINOR 2
 #define MYAPP_VERSION_PATCH 0
-#define MYAPP_VERSION_LABEL "-beta5"
+#define MYAPP_VERSION_LABEL "-prerelease"
 #define MYAPP_VERSION_DATE "2015-03-31"
 // --- end auto-updated defines ---
 
