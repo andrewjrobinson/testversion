@@ -35,16 +35,23 @@
 #ifndef SRC_VERSION_H_
 #define SRC_VERSION_H_
 
+#ifndef Q
+# define Q(x) #x
+#endif
+#ifndef QUOTE
+# define QUOTE(x) Q(x)
+#endif
+
 // --- the following defines are auto-updated by the set-version.sh so DO NOT EDIT THEM!! ---
 #define MYAPP_VERSION_MAJOR 0
-#define MYAPP_VERSION_MINOR 1
+#define MYAPP_VERSION_MINOR 2
 #define MYAPP_VERSION_PATCH 0
-#define MYAPP_VERSION_LABEL "-beta5"
+#define MYAPP_VERSION_LABEL ""
 #define MYAPP_VERSION_DATE "2015-03-31"
 // --- end auto-updated defines ---
 
 // combined version
-#define MYAPP_VERSION MYAPP_VERSION_MAJOR.MYAPP_VERSION_MINOR.MYAPP_VERSION_PATCHMYAPP_VERSION_LABEL
+#define MYAPP_VERSION QUOTE(MYAPP_VERSION_MAJOR)"."QUOTE(MYAPP_VERSION_MINOR)"."QUOTE(MYAPP_VERSION_PATCH)MYAPP_VERSION_LABEL
 
 
 

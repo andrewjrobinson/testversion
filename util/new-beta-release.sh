@@ -91,8 +91,9 @@ if [ "$?" != "0" ]; then
     exit 5
 fi
 git tag -a v$RELEASE_NUMBER -m "Version $RELEASE_NUMBER"
-if [ "$?" != "0" ]; then
-    echo "git tag -a v$RELEASE_NUMBER -m \"Version $RELEASE_NUMBER\":  Failed (with code $?), exiting"
+RC=$?
+if [ "$RC" != "0" ]; then
+    echo "git tag -a v$RELEASE_NUMBER -m \"Version $RELEASE_NUMBER\":  Failed (with code $RC), exiting"
     exit 5
 fi
 
