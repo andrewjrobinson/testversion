@@ -39,7 +39,7 @@
 #define MYAPP_VERSION_MAJOR 0
 #define MYAPP_VERSION_MINOR 1
 #define MYAPP_VERSION_PATCH 0
-#define MYAPP_VERSION_LABEL 
+#define MYAPP_VERSION_LABEL beta1
 #define MYAPP_VERSION_DATE "2015-03-31"
 // --- end auto-updated defines ---
 
